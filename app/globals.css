@@ -2841,6 +2841,8 @@ img {
 @media (max-width: 900px) {
   .tr-card__row,
   .tr-status__top { flex-direction: column; }
+  .tr-card__row { width: 100%; }
+  .tr-card input { width: 100%; }
   .tr-summary { grid-template-columns: 1fr 1fr; }
   .tr-summary > div { border-right: 0; border-bottom: 1px solid #e6e6e6; }
   .tr-details { grid-template-columns: 1fr; }
@@ -4737,7 +4739,7 @@ img {
 
   /* —— Track order —— */
   .tr-hero {
-    padding: 24px 16px 8px;
+    padding: 24px 8px 8px;
   }
 
   .tr-hero__title img {
@@ -4746,23 +4748,37 @@ img {
   }
 
   .tr-card {
-    padding: 20px 16px 24px;
+    padding: 24px 16px 28px;
     border-radius: 20px;
   }
 
   .tr-card > p {
     font-size: 16px;
+    margin-bottom: 18px;
+  }
+
+  .tr-card__row {
+    gap: 14px;
   }
 
   .tr-card input {
-    height: 48px;
-    font-size: 16px;
+    width: 100%;
+    height: 72px;
+    min-height: 72px;
+    padding: 20px 24px;
+    font-size: 18px;
+    line-height: 1.3;
+    border-radius: 18px;
+    -webkit-appearance: none;
+    appearance: none;
   }
 
   .tr-card .hp-btn {
     width: 100%;
     min-width: 0;
-    min-height: 48px;
+    min-height: 64px;
+    height: 64px;
+    font-size: 18px;
   }
 
   .tr-status__headline h1 {
