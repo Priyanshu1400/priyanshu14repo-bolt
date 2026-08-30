@@ -49,10 +49,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   const navLinks = [
     { href: '/product', label: 'Shop' },
+    { href: '/game', label: 'Play the Ritual' },
     { href: '/about', label: 'Our Story' },
     { href: '/contact', label: 'Contact Us' },
     { href: '/track-order', label: 'Track My Order' },
   ];
+
+  if (pathname === '/game') {
+    return <>{children}</>;
+  }
 
   const handleNewsletterSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

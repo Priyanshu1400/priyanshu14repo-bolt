@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Volume2, VolumeX } from 'lucide-react';
 import FAQSection from '@/components/FAQSection';
+import GameWelcomeModal from '@/components/game/GameWelcomeModal';
 import { useCart, TEA_PRODUCT } from '@/components/CartContext';
 import { useToast } from '@/components/ToastContext';
 
@@ -116,6 +117,7 @@ export default function HomePage() {
 
   return (
     <div className="hp">
+      <GameWelcomeModal />
       <section className="hp-hero">
         <div className="hp-hero__copy">
           <h1 className="hp-hero__title">The Chai You&apos;d Call Home For</h1>

@@ -29,6 +29,13 @@
   --shadow-md: 0 8px 32px rgba(26, 20, 16, 0.1);
   --shadow-lg: 0 16px 56px rgba(26, 20, 16, 0.14);
   --shadow-hover: 0 12px 40px rgba(26, 20, 16, 0.12);
+  --ink: var(--text);
+  --ink-m: var(--text-m);
+  --ink-l: var(--text-l);
+  --line: var(--border);
+  --font-site-display: var(--font-display);
+  --font-site-logo: var(--font-logo);
+  --font-site-body: var(--font-body);
 }
 
 * {
@@ -4903,4 +4910,219 @@ img {
     white-space: normal;
     max-width: calc(100vw - 32px);
   }
+}
+
+/* ===== MEASUREMENT RITUAL (ported from the game) ===== */
+.font-site-display {
+  font-family: var(--font-site-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.font-site-logo {
+  font-family: var(--font-site-logo);
+}
+
+.font-site-body {
+  font-family: var(--font-site-body);
+}
+
+.font-caveat {
+  font-family: 'Caveat', cursive;
+}
+
+.paper-grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+.kitchen-paper {
+  background-color: var(--cream);
+  background-image:
+    radial-gradient(120% 90% at 18% 0%, rgba(224, 125, 38, 0.14) 0%, transparent 58%),
+    radial-gradient(100% 80% at 92% 8%, rgba(0, 165, 159, 0.1) 0%, transparent 55%),
+    radial-gradient(90% 70% at 50% 108%, rgba(26, 20, 16, 0.09) 0%, transparent 60%);
+}
+
+.hand-edge {
+  border-radius: 18px 24px 16px 22px / 22px 16px 24px 18px;
+}
+
+.hand-edge-sm {
+  border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
+}
+
+.chalk-tick {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(26, 20, 16, 0.22) 0px,
+    rgba(26, 20, 16, 0.22) 1px,
+    transparent 1px,
+    transparent 14px
+  );
+}
+
+@keyframes streamWaver {
+  0%, 100% { transform: translateX(-0.6px) scaleX(0.97); }
+  35% { transform: translateX(0.9px) scaleX(1.04); }
+  70% { transform: translateX(-0.3px) scaleX(1); }
+}
+
+.animate-stream {
+  animation: streamWaver 0.42s infinite ease-in-out;
+}
+
+@keyframes surfaceRipple {
+  0% { transform: scale(0.5); opacity: 0.55; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+
+.animate-ripple {
+  animation: surfaceRipple 1s infinite ease-out;
+}
+
+@keyframes riseSteam {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.1; }
+  50% { transform: translateY(-40px) scale(1.3) translateX(6px); opacity: 0.5; }
+  100% { transform: translateY(-80px) scale(1.8) translateX(-10px); opacity: 0; }
+}
+
+.animate-steam {
+  animation: riseSteam 3s infinite ease-out;
+}
+
+@keyframes flameFlicker {
+  0%, 100% { transform: scaleY(1) scaleX(1); opacity: 0.95; }
+  25% { transform: scaleY(1.1) scaleX(0.96) skewX(1deg); opacity: 1; }
+  50% { transform: scaleY(0.92) scaleX(1.04); opacity: 0.88; }
+  75% { transform: scaleY(1.08) scaleX(0.94) skewX(-1deg); opacity: 0.98; }
+}
+
+.animate-flame {
+  animation: flameFlicker 0.4s infinite ease-in-out;
+  transform-origin: bottom center;
+}
+
+@keyframes bubblePop {
+  0% { transform: translateY(12px) scale(0.3); opacity: 0; }
+  50% { opacity: 0.8; }
+  100% { transform: translateY(-16px) scale(1.1); opacity: 0; }
+}
+
+.animate-bubble {
+  animation: bubblePop 1.4s infinite ease-out;
+}
+
+.game-welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.game-welcome__scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 20, 16, 0.58);
+  backdrop-filter: blur(6px);
+}
+
+.game-welcome__card {
+  position: relative;
+  z-index: 1;
+  width: min(520px, 100%);
+  overflow: hidden;
+  background: var(--cream);
+  border: 2px solid var(--text);
+  border-radius: 18px 24px 16px 22px / 22px 16px 24px 18px;
+  box-shadow: var(--shadow-lg);
+}
+
+.game-welcome__photo {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.game-welcome__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  border: 2px solid var(--text);
+  border-radius: 12px 16px 11px 15px / 15px 11px 16px 12px;
+  color: var(--text-m);
+}
+
+.game-welcome__body {
+  padding: 22px 22px 24px;
+}
+
+.game-welcome__eyebrow {
+  font-family: var(--font-logo);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+.game-welcome__title {
+  margin-top: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 5vw, 34px);
+  line-height: 1.15;
+  color: var(--text);
+}
+
+.game-welcome__copy {
+  margin-top: 10px;
+  font-size: 15px;
+  color: var(--text-m);
+}
+
+.game-welcome__actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.game-welcome__play,
+.game-welcome__skip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 18px;
+  border: 2px solid var(--text);
+  border-radius: 18px 24px 16px 22px / 22px 16px 24px 18px;
+  font-family: var(--font-display);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.game-welcome__play {
+  background: var(--orange);
+  color: #fff;
+}
+
+.game-welcome__skip {
+  background: #fff;
+  color: var(--text);
+  font-family: var(--font-logo);
+  font-size: 14px;
+  font-weight: 700;
 }

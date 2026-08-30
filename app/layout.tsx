@@ -34,7 +34,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Dela+Gothic+One&family=Inter:wght@400;500;600&family=Manrope:wght@500;800&family=Space+Grotesk:wght@700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=Dela+Gothic+One&family=Inter:wght@400;500;600&family=Manrope:wght@500;800&family=Space+Grotesk:wght@500;600;700&display=swap"
         />
         <link
           rel="stylesheet"
