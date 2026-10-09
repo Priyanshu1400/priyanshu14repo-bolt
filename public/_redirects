@@ -1,0 +1,6 @@
+# ============================================================
+# Redirect rules (processed by Netlify before the Next.js app)
+# To change the destination, edit ONLY the URL on the right side.
+# Format:  from  ->  to  status
+# ============================================================
+/tea  /video-coming-soon  302
