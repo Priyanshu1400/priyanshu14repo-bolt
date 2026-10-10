@@ -143,8 +143,8 @@ export default function HomePage() {
           >
             {muted ? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
-          <img src="/figma-home/sticker-2.svg" alt="" className="hp-hero__sticker hp-hero__sticker--top" />
-          <img src="/figma-home/sticker-1.svg" alt="" className="hp-hero__sticker hp-hero__sticker--mid" />
+          <img src="/figma-home/sticker-2.png" alt="" className="hp-hero__sticker hp-hero__sticker--top" />
+          <img src="/figma-home/sticker-1.png" alt="" className="hp-hero__sticker hp-hero__sticker--mid" />
         </div>
         <div className="hp-wave" aria-hidden="true">
           <svg
@@ -190,7 +190,7 @@ export default function HomePage() {
         <div className="hp-shop__panel">
           <div className="hp-shop__photo">
             <img src="/figma-home/shop-pour.png" alt="Chai being poured" />
-            <img src="/figma-home/stamp.svg" alt="" className="hp-shop__stamp" />
+            <img src="/figma-home/stamp.png" alt="" className="hp-shop__stamp" />
             <img src="/figma-home/kettle.png" alt="" className="hp-shop__kettle hp-shop__kettle--mid" />
             <img src="/figma-home/kettle.png" alt="" className="hp-shop__kettle hp-shop__kettle--low" />
             <span className="hp-shop__brand">300ml TEA</span>
@@ -227,9 +227,9 @@ export default function HomePage() {
         </div>
         <div className="hp-soon__first">
           <img src="/figma-home/glass-kettle.png" alt="" className="hp-soon__icon hp-soon__icon--kettle" />
-          <img src="/figma-home/tea-glass.svg" alt="" className="hp-soon__icon hp-soon__icon--glass" />
+          <img src="/figma-home/tea-glass.png" alt="" className="hp-soon__icon hp-soon__icon--glass" />
           <p className="hp-soon__sub">But First,</p>
-          <img src="/figma-home/tea-glass.svg" alt="" className="hp-soon__icon hp-soon__icon--glass" />
+          <img src="/figma-home/tea-glass.png" alt="" className="hp-soon__icon hp-soon__icon--glass" />
           <img src="/figma-home/glass-kettle.png" alt="" className="hp-soon__icon hp-soon__icon--kettle hp-soon__icon--flip" />
         </div>
       </section>
