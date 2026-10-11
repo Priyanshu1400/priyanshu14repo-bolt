@@ -64,7 +64,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     { href: '/track-order', label: 'Track My Order' },
   ];
 
-  if (pathname === '/game') {
+  // The game and the admin area have their own full-screen layouts.
+  if (pathname === '/game' || pathname.startsWith('/admin')) {
     return <>{children}</>;
   }
 
