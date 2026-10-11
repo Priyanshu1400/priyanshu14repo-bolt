@@ -5196,3 +5196,23 @@ img {
   font-size: 14px;
   font-weight: 700;
 }
+/* Brand logo (white cup mark) in the navbar and footer */
+.navbar__logo-img {
+  display: block;
+  height: 66px;
+  width: auto;
+}
+.footer__logo-img {
+  display: block;
+  height: 120px;
+  width: auto;
+  margin-bottom: 8px;
+}
+@media (max-width: 1023px) {
+  .navbar__logo-img {
+    height: 46px;
+  }
+  .footer__logo-img {
+    height: 88px;
+  }
+}

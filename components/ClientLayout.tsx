@@ -93,7 +93,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <nav className={`navbar ${scrolled ? 'navbar--solid' : 'navbar--transparent'}`}>
         <div className="navbar__inner">
           <Link href="/" className="navbar__logo">
-            <span className="navbar__logo-text">300ml TEA</span>
+            <img src="/brand/logo-white.svg" alt="300ml Tea" className="navbar__logo-img" width={82} height={66} />
           </Link>
 
           <ul className="navbar__links">
@@ -175,7 +175,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <div className="footer__inner">
           <div className="footer__grid">
             <div>
-              <span className="footer__logo">300ml TEA</span>
+              <img src="/brand/logo-white.svg" alt="300ml Tea" className="footer__logo-img" width={148} height={120} />
               <p className="footer__brand-text">
                 Pre-measured raw chai blend that brings maa ke hath ki chai to your cup, kahin bhi. Not instant. Not premix. Just real chai.
               </p>
