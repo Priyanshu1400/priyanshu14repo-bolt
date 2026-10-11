@@ -43,8 +43,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       },
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
-    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+    const observeAll = () =>
+      document.querySelectorAll('.reveal:not(.visible)').forEach((el) => observer.observe(el));
+    observeAll();
+    // Some pages (e.g. the cart, which loads from localStorage) render their
+    // .reveal content after this effect runs; pick those up too.
+    const mutations = new MutationObserver(observeAll);
+    mutations.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
   }, [pathname]);
 
   const navLinks = [
