@@ -9,11 +9,13 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://300mltea.com'),
   title: '300ml Tea - Wahi wali chai. Kahin bhi.',
   description: '300ml Tea - Pre-measured raw chai blend. Maa ki chai ka magic, ab kahin bhi.',
-  icons: {
-    icon: '/brand/logo-square.png',
-    apple: '/brand/logo-square.png',
-  },
+  // Icons come from app/favicon.ico, app/icon.png (192px, a multiple of 48 as Google wants) and app/apple-icon.png.
   openGraph: {
+    type: 'website',
+    siteName: '300ml Tea',
+    url: 'https://300mltea.com',
+    title: '300ml Tea - Wahi wali chai. Kahin bhi.',
+    description: '300ml Tea - Pre-measured raw chai blend. Maa ki chai ka magic, ab kahin bhi.',
     images: [
       { url: 'https://300mltea.com/og.png' },
     ],
@@ -43,6 +45,19 @@ export default function RootLayout({
         <link
           rel="stylesheet"
           href="https://checkout-ui.shiprocket.com/assets/styles/shopify.css"
+        />
+        {/* Tells search engines which logo belongs to the brand. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: '300ml Tea',
+              url: 'https://300mltea.com',
+              logo: 'https://300mltea.com/brand/icon-512.png',
+            }),
+          }}
         />
       </head>
       <body>
