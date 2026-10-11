@@ -24,14 +24,9 @@ export default function CartDrawer() {
     removeItem,
     totalItems,
     subtotal,
-    couponApplied,
-    couponCode,
-    applyCoupon,
-    removeCoupon,
   } = useCart();
   const { showToast } = useToast();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
-  const [discountInput, setDiscountInput] = useState('');
 
   const handleCheckout = async (e: React.MouseEvent<HTMLButtonElement>) => {
     if (items.length === 0) {
@@ -153,37 +148,9 @@ export default function CartDrawer() {
             </div>
 
             <div className="cart-drawer__footer">
-              <form
-                className="cart-drawer__discount"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  const ok = applyCoupon(discountInput);
-                  if (!ok) showToast('Invalid coupon code');
-                }}
-              >
-                <input
-                  type="text"
-                  className="cart-drawer__discount-input"
-                  placeholder="Discount Code"
-                  value={couponApplied ? couponCode : discountInput}
-                  onChange={(event) => setDiscountInput(event.target.value)}
-                  disabled={couponApplied}
-                  aria-label="Discount code"
-                />
-                {couponApplied ? (
-                  <button
-                    type="button"
-                    className="cart-drawer__apply"
-                    onClick={removeCoupon}
-                  >
-                    REMOVE
-                  </button>
-                ) : (
-                  <button type="submit" className="cart-drawer__apply">
-                    APPLY
-                  </button>
-                )}
-              </form>
+              <p style={{ fontSize: 13, margin: '0 0 12px', opacity: 0.75 }}>
+                Have a partner code? Apply it at checkout.
+              </p>
 
               <div className="cart-drawer__subtotal">
                 <span className="cart-drawer__subtotal-label">

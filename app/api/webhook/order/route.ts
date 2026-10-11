@@ -62,6 +62,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'DB error' }, { status: 500 });
     }
 
+    // Keep the raw payload so partner codes can be matched to orders. A failure
+    // here must never fail the webhook: the order itself is already saved.
+    const { error: eventError } = await supabase
+      .from('order_events')
+      .insert({ order_id, payload: body });
+    if (eventError) {
+      console.error('[webhook/order] order_events insert failed:', eventError.message);
+    }
+
     return NextResponse.json({ received: true }, { status: 200 });
   } catch (err) {
     console.error('[webhook/order]', err);

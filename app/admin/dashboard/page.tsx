@@ -2,13 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { MessageSquare, ShoppingBag, Edit3, LogOut, Menu, X, Bell } from 'lucide-react';
+import { MessageSquare, ShoppingBag, Edit3, Gift, LogOut, Menu, X, Bell } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import MessagesTab from '@/components/admin/MessagesTab';
 import OrdersTab from '@/components/admin/OrdersTab';
 import ContentEditorTab from '@/components/admin/ContentEditorTab';
+import PartnerCodesTab from '@/components/admin/PartnerCodesTab';
 
-type Tab = 'messages' | 'orders' | 'content';
+type Tab = 'messages' | 'orders' | 'partners' | 'content';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -24,12 +25,14 @@ export default function AdminDashboardPage() {
   const navItems: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: 'messages', label: 'Messages', icon: <MessageSquare size={18} /> },
     { id: 'orders', label: 'Orders', icon: <ShoppingBag size={18} /> },
+    { id: 'partners', label: 'Partner Codes', icon: <Gift size={18} /> },
     { id: 'content', label: 'Content Editor', icon: <Edit3 size={18} /> },
   ];
 
   const tabTitles: Record<Tab, string> = {
     messages: 'Messages',
     orders: 'Orders',
+    partners: 'Partner Codes',
     content: 'Content Editor',
   };
 
@@ -196,6 +199,7 @@ export default function AdminDashboardPage() {
         <div style={{ padding: '32px 28px' }}>
           {tab === 'messages' && <MessagesTab onUnreadCountChange={setUnreadCount} />}
           {tab === 'orders' && <OrdersTab />}
+          {tab === 'partners' && <PartnerCodesTab />}
           {tab === 'content' && <ContentEditorTab />}
         </div>
       </main>

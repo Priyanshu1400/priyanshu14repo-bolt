@@ -3,18 +3,9 @@
 import Link from 'next/link';
 import { useCart } from '@/components/CartContext';
 import { Minus, Plus, Trash2, ArrowRight, ShoppingBag } from 'lucide-react';
-import { useState } from 'react';
 
 export default function CartPage() {
-  const { items, updateQuantity, removeItem, subtotal, discount, total, couponCode, couponApplied, applyCoupon, removeCoupon } = useCart();
-  const [couponInput, setCouponInput] = useState('');
-  const [couponError, setCouponError] = useState('');
-
-  const handleApplyCoupon = () => {
-    setCouponError('');
-    const ok = applyCoupon(couponInput);
-    if (!ok) setCouponError('Invalid coupon code');
-  };
+  const { items, updateQuantity, removeItem, subtotal, total } = useCart();
 
   if (items.length === 0) {
     return (
@@ -68,27 +59,13 @@ export default function CartPage() {
 
           <div className="cart-summary reveal reveal-delay-1">
             <h3 className="cart-summary__title">Order Summary</h3>
-            <div className="cart-summary__coupon">
-              <input type="text" placeholder="Coupon code" value={couponInput} onChange={(e) => setCouponInput(e.target.value)} />
-              <button className="btn btn-primary btn-small" onClick={handleApplyCoupon}>Apply</button>
-            </div>
-            {couponApplied && (
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, fontSize: 14 }}>
-                <span style={{ color: 'var(--orange)', fontWeight: 600 }}>Coupon: {couponCode}</span>
-                <button style={{ background: 'none', border: 'none', color: 'var(--text-l)', cursor: 'pointer', fontSize: 12 }} onClick={removeCoupon}>Remove</button>
-              </div>
-            )}
-            {couponError && <div style={{ color: 'var(--orange)', fontSize: 13, marginBottom: 12 }}>{couponError}</div>}
+            <p style={{ fontSize: 13, color: 'var(--text-l)', marginBottom: 12 }}>
+              Have a partner code? Apply it at checkout.
+            </p>
             <div className="cart-summary__row">
               <span>Subtotal</span>
               <span>₹{subtotal}</span>
             </div>
-            {couponApplied && (
-              <div className="cart-summary__row" style={{ color: 'var(--orange)' }}>
-                <span>Discount</span>
-                <span>-₹{discount}</span>
-              </div>
-            )}
             <div className="cart-summary__row">
               <span>Delivery</span>
               <span style={{ fontSize: 12 }}>Free online · ₹49 COD</span>

@@ -204,7 +204,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
   const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
-  const discount = couponApplied ? Math.round(subtotal * 0.2) : 0;
+  // Discount codes are applied by Shiprocket Checkout, which charges the real
+  // amount. A site-side discount here was never sent there, so it stays 0.
+  const discount = 0;
   const total = subtotal - discount;
 
   return (
