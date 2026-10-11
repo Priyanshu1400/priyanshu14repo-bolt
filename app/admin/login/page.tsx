@@ -17,13 +17,23 @@ export default function AdminLoginPage() {
     setLoading(true);
 
     const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
 
     if (authError) {
+      setLoading(false);
       setError('Invalid email or password. Please try again.');
-    } else {
-      router.replace('/admin/dashboard');
+      return;
     }
+
+    // Customer accounts can sign in too, so check the admin list. If is_admin()
+    // doesn't exist yet (migration not run), fall back to the old behaviour.
+    const { data: isAdmin, error: adminError } = await supabase.rpc('is_admin');
+    setLoading(false);
+    if (!adminError && isAdmin === false) {
+      await supabase.auth.signOut();
+      setError('This account does not have admin access.');
+      return;
+    }
+    router.replace('/admin/dashboard');
   };
 
   return (
