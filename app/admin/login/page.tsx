@@ -9,7 +9,28 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [info, setInfo] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const handleForgotPassword = async () => {
+    setError('');
+    setInfo('');
+    if (!email.trim()) {
+      setError('Enter your admin email above, then click "Forgot password?" again.');
+      return;
+    }
+    setLoading(true);
+    const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/admin/reset-password`,
+    });
+    setLoading(false);
+    if (resetError) {
+      setError('Could not send the reset email. Please try again in a few minutes.');
+      return;
+    }
+    // Same message whether or not the account exists, so emails can't be probed.
+    setInfo('If that email has an account, a reset link is on its way. Check your inbox and spam folder.');
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -120,6 +141,20 @@ export default function AdminLoginPage() {
             </div>
           )}
 
+          {info && (
+            <div style={{
+              background: '#f0fdf4',
+              border: '1px solid #bbf7d0',
+              borderRadius: 8,
+              padding: '10px 14px',
+              fontSize: 13,
+              color: '#15803d',
+              marginBottom: 20,
+            }}>
+              {info}
+            </div>
+          )}
+
           <button
             type="submit"
             disabled={loading}
@@ -136,7 +171,25 @@ export default function AdminLoginPage() {
               transition: 'background 0.2s',
             }}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Please wait...' : 'Login'}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            disabled={loading}
+            style={{
+              display: 'block',
+              margin: '16px auto 0',
+              background: 'none',
+              border: 'none',
+              color: '#C8522A',
+              fontSize: 13,
+              fontWeight: 600,
+              cursor: loading ? 'not-allowed' : 'pointer',
+            }}
+          >
+            Forgot password?
           </button>
         </form>
       </div>
