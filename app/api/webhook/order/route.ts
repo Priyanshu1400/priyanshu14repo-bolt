@@ -28,7 +28,16 @@ export async function POST(req: NextRequest) {
     const signaturesMatch =
       sigBuf.length === expBuf.length && timingSafeEqual(sigBuf, expBuf);
 
-    if (!signaturesMatch) {
+    // Shiprocket Checkout doesn't sign its webhooks; instead it sends a custom
+    // header (Settings → Webhooks → Headers) carrying the shared secret as-is.
+    // The dashboard is configured with it in x-shiprocket-signature.
+    const secretBuf = Buffer.from(webhookSecret);
+    const tokenMatches = [req.headers.get('x-webhook-token'), signature].some((value) => {
+      const token = Buffer.from(value || '');
+      return token.length === secretBuf.length && timingSafeEqual(token, secretBuf);
+    });
+
+    if (!signaturesMatch && !tokenMatches) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
