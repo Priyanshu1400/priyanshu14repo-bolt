@@ -35,42 +35,13 @@ export default function HomePage() {
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // The hero video always starts silent. Sound only comes on when the visitor
+  // presses the speaker button (toggleMute) — never on any other click or key.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    const enableSound = async () => {
-      video.muted = false;
-      video.volume = 1;
-      try {
-        await video.play();
-        setMuted(false);
-        return true;
-      } catch {
-        video.muted = true;
-        setMuted(true);
-        return false;
-      }
-    };
-
-    const unlock = () => {
-      void enableSound().then((enabled) => {
-        if (enabled) {
-          window.removeEventListener('pointerdown', unlock);
-          window.removeEventListener('keydown', unlock);
-        }
-      });
-    };
-
     video.muted = true;
     void video.play().catch(() => undefined);
-    window.addEventListener('pointerdown', unlock);
-    window.addEventListener('keydown', unlock);
-
-    return () => {
-      window.removeEventListener('pointerdown', unlock);
-      window.removeEventListener('keydown', unlock);
-    };
   }, []);
 
   const toggleMute = () => {
