@@ -5216,3 +5216,31 @@ img {
     height: 88px;
   }
 }
+
+/* Hero video: zoom 15% from the top-left inside a clipping frame so the
+   generator's watermark (bottom-right of the source, ~9% from the right and
+   ~17% from the bottom) always falls outside the visible area. */
+.hp-hero__frame {
+  position: relative;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 30px;
+}
+.hp-hero__frame .hp-hero__photo {
+  transform: scale(1.15);
+  transform-origin: 0 0;
+}
+@media (max-width: 1023px) {
+  .hp-hero__frame {
+    border-radius: 24px;
+  }
+}
+/* Our logo badge, placed by JS exactly over the video's watermark. */
+.hp-hero__badge {
+  position: absolute;
+  z-index: 4;
+  object-fit: contain;
+  border-radius: 22%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}

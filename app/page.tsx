@@ -26,6 +26,33 @@ const REVIEWS = [
 
 const INGREDIENTS = ['Premium Tea', 'Natural Sugar', 'Adrak Masala', 'Elaichi Masala'];
 
+// The hero video has a generator watermark burned in near its bottom-right
+// corner. These are its centre and size in the source video's own pixels.
+const WATERMARK = { x: 1740, y: 900, size: 80 };
+// Must match .hp-hero__frame .hp-hero__photo { transform: scale(...) } in globals.css.
+const HERO_ZOOM = 1.15;
+
+/**
+ * Where the watermark lands inside the video frame, given object-fit: cover,
+ * object-position: center top and the zoom from the top-left corner.
+ * Returns null when it is cropped out of view.
+ */
+function watermarkSpot(video: HTMLVideoElement) {
+  const srcW = video.videoWidth;
+  const srcH = video.videoHeight;
+  const boxW = video.offsetWidth;
+  const boxH = video.offsetHeight;
+  if (!srcW || !srcH || !boxW || !boxH) return null;
+  const scale = Math.max(boxW / srcW, boxH / srcH);
+  const offsetX = (boxW - srcW * scale) / 2;
+  const x = (offsetX + WATERMARK.x * scale) * HERO_ZOOM;
+  const y = WATERMARK.y * scale * HERO_ZOOM;
+  const size = Math.max(44, WATERMARK.size * scale * HERO_ZOOM * 1.8);
+  const half = size / 2;
+  if (x + half < 0 || x - half > boxW || y + half < 0 || y - half > boxH) return null;
+  return { left: x - half, top: y - half, size };
+}
+
 export default function HomePage() {
   const { addItem, updateQuantity, items, openDrawer } = useCart();
   const { showToast } = useToast();
@@ -33,7 +60,23 @@ export default function HomePage() {
   const [draftQty, setDraftQty] = useState(1);
   const [reviewIndex, setReviewIndex] = useState(0);
   const [muted, setMuted] = useState(true);
+  const [badge, setBadge] = useState<{ left: number; top: number; size: number } | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Cover the video's watermark with our logo badge wherever it lands on this screen size.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const place = () => setBadge(watermarkSpot(video));
+    place();
+    video.addEventListener('loadedmetadata', place);
+    const observer = new ResizeObserver(place);
+    observer.observe(video);
+    return () => {
+      video.removeEventListener('loadedmetadata', place);
+      observer.disconnect();
+    };
+  }, []);
 
   // The hero video always starts silent. Sound only comes on when the visitor
   // presses the speaker button (toggleMute) — never on any other click or key.
@@ -96,16 +139,27 @@ export default function HomePage() {
           <button type="button" className="hp-btn" onClick={shopNow}>SHOP NOW</button>
         </div>
         <div className="hp-hero__visual">
-          <video
-            ref={videoRef}
-            className="hp-hero__photo"
-            src="https://zqzuhdbjqutobutespzj.supabase.co/storage/v1/object/public/site-assets/momchaimaking.mp4"
-            autoPlay
-            loop
-            muted={muted}
-            playsInline
-            aria-label="Making chai at home"
-          />
+          <div className="hp-hero__frame">
+            <video
+              ref={videoRef}
+              className="hp-hero__photo"
+              src="https://zqzuhdbjqutobutespzj.supabase.co/storage/v1/object/public/site-assets/momchaimaking.mp4"
+              autoPlay
+              loop
+              muted={muted}
+              playsInline
+              aria-label="Making chai at home"
+            />
+            {badge && (
+              <img
+                src="/brand/logo-red.svg"
+                alt=""
+                aria-hidden="true"
+                className="hp-hero__badge"
+                style={{ left: badge.left, top: badge.top, width: badge.size, height: badge.size }}
+              />
+            )}
+          </div>
           <button
             type="button"
             className="hp-hero__mute"
